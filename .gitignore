@@ -1,1 +1,4 @@
 config-private.yml
+data/raw/*
+data/intermediate/*
+data/processed/*
