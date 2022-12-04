@@ -33,7 +33,7 @@ Based on [Cookiecutter Structure](https://drivendata.github.io/cookiecutter-data
 
 Download the project data from [Zenodo](https://zenodo.org/record/4661645#.YoyyePfK4lQ) with the command:
 ```
-wget https://zenodo.org/record/4661645/files/Keyword_spotting_dataset_v0.01_17042021.rar?download=1
+wget https://zenodo.org/record/4661645/files/Keyword_spotting_dataset_v0.01_17042021.rar
 ```
 
 Extract the downloaded archive (RAR) and copy _the contents of the resulting folder_ to the `data/raw` folder:
