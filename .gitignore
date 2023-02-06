@@ -5,3 +5,6 @@ data/intermediate/*
 data/processed/*
 documents
 results
+src/misc
+src./gitkeep
+.DS_Store
