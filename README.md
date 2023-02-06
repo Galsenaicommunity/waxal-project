@@ -22,6 +22,7 @@ python src/run_audio_classification.py \
     --do_eval \
     --learning_rate 3e-5 \
     --max_length_seconds 1 \
+    --validation_split_percentage 20 \
     --attention_mask False \
     --warmup_ratio 0.1 \
     --num_train_epochs 5 \
