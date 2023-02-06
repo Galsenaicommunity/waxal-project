@@ -6,7 +6,7 @@
 State of the art study of Keyword Spotting models to leverage the [Waxal](https://k4all.org/project/keyword-spotting-with-african-languages/) dataset.
 
 
-## Single-GPU
+## Running Commands
 
 The following command shows how to fine-tune [wav2vec2-base](https://huggingface.co/facebook/wav2vec2-base) on the 🗣️ [Keyword Spotting](https://huggingface.co/datasets/galsenai/waxal_dataset) of the waxal dataset.
 
