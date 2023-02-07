@@ -1,4 +1,10 @@
 config-private.yml
+data
 data/raw/*
 data/intermediate/*
 data/processed/*
+documents
+results
+src/misc
+src./gitkeep
+.DS_Store

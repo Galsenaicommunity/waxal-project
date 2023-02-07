@@ -5,59 +5,36 @@
 # Waxal Project
 State of the art study of Keyword Spotting models to leverage the [Waxal](https://k4all.org/project/keyword-spotting-with-african-languages/) dataset.
 
-# Project Structure
 
-We were inspired by the [Cookiecutter](https://drivendata.github.io/cookiecutter-data-science/) guidelines to organize this project as follows: 
+## Running Commands
 
-```
-.
-├── Makefile                <- tasks
-├── config.yml              <- config file in YAML, can be exported as env vars if needed
-├── config-private.yml      <- config file with private config (password, api keys, etc.)
-├── data
-│   └── raw
-│   ├── intermediate
-│   ├── processed
-│   ├── temp
-├── results
-│   ├── outputs
-│   ├── models
-├── documents
-│   ├── docs
-│   ├── images
-│   └── references
-├── notebooks               <- notebooks for explorations / prototyping
-└── src                     <- all source code, internal org as needed
-```
-# Usage
+The following command shows how to fine-tune [wav2vec2-base](https://huggingface.co/facebook/wav2vec2-base) on the 🗣️ [Keyword Spotting](https://huggingface.co/datasets/galsenai/waxal_dataset) of the waxal dataset.
 
-Download the project data from [Zenodo](https://zenodo.org/record/4661645#.YoyyePfK4lQ) with the command:
+```bash
+python src/run_audio_classification.py \
+    --model_name_or_path facebook/wav2vec2-base \
+    --dataset_name galsenai/waxal_dataset \
+    --dataset_config_name waxal \
+    --output_dir wav2vec2-base-ft-keyword-spotting \
+    --overwrite_output_dir \
+    --remove_unused_columns False \
+    --do_train \
+    --do_eval \
+    --learning_rate 3e-5 \
+    --max_length_seconds 1 \
+    --validation_split_percentage 20 \
+    --attention_mask False \
+    --warmup_ratio 0.1 \
+    --num_train_epochs 5 \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 4 \
+    --per_device_eval_batch_size 4 \
+    --logging_strategy steps \
+    --logging_steps 10 \
+    --evaluation_strategy epoch \
+    --save_strategy epoch \
+    --load_best_model_at_end True \
+    --metric_for_best_model accuracy \
+    --save_total_limit 3 \
+    --seed 0
 ```
-wget https://zenodo.org/record/4661645/files/Keyword_spotting_dataset_v0.01_17042021.rar
-```
-
-Install a rar tool to extract the compressed archive:
-```
-sudo apt install unrar
-```
-> If you are not using Linux, download [Winrar](https://www.win-rar.com/) to extract the archive.
-
-Extract the contents of the downloaded archive (RAR) to the `data/raw` folder:
-```
-unrar e Keyword_spotting_dataset_v0.01_17042021.rar data/raw
-```
-
-## Output
-After running the [Data Exploration](notebooks/Data%20Analysis/data_exploration.ipynb) notebook, data for each language's audio will be stored in a specific folder in `data/intermediate` as follows:
-```
-data/intermediate
-├── Diola
-├── Mandingue
-├── Poular
-├── Soninké
-├── Sérère
-└── Wolof
-```
-
-# Acknowledgement
-The waxal dataset collection has been funded by [Knowledge4All foundation](https://k4all.org/project/keyword-spotting-with-african-languages/).
