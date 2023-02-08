@@ -8,3 +8,4 @@ results
 src/misc
 src./gitkeep
 .DS_Store
+wandb
