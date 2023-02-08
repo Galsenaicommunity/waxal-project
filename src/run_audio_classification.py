@@ -29,7 +29,8 @@ import wandb
 logger = logging.getLogger(__name__)
 
 # Will error if the minimal version of Transformers is not installed. Remove at your own risks.
-# check_min_version("4.27.0.dev0")
+
+check_min_version("4.26.0.dev0")
 
 require_version("datasets>=1.14.0", "To fix: pip install -r requirements.txt")
 
@@ -379,9 +380,9 @@ def main():
                 predictions=predictions, references=labels
             ),
             "precision": precision_metric.compute(
-                predictions=predictions, references=labels
+                predictions=predictions, references=labels , average='weighted'
             ),
-            "f1": f1_metric.compute(predictions=predictions, references=labels),
+            "f1": f1_metric.compute(predictions=predictions, references=labels ,average='weighted'),
         }
 
     config = AutoConfig.from_pretrained(
