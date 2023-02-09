@@ -2,7 +2,7 @@
 ![Issues](https://img.shields.io/github/issues/Galsenaicommunity/waxal-project)
 ![PR](https://img.shields.io/github/issues-pr/Galsenaicommunity/waxal-project)
 
-# Waxal : Multilingual Language Senegalese Keyword Spotting
+# Waxal : Multilingual Senegalese Language Keyword Spotting
 State of the art study of Keyword Spotting models to leverage the [Waxal](https://k4all.org/project/keyword-spotting-with-african-languages/) dataset.
 
 
