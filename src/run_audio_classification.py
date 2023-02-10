@@ -288,6 +288,10 @@ def main():
         data_args.dataset_config_name,
         cache_dir=model_args.cache_dir,
     )
+
+        # shuffle the raw_datasets before splitting
+    raw_datasets = raw_datasets.shuffle(seed=training_args.seed)
+    
     if "eval" not in raw_datasets:
         raw_datasets["eval"] = load_dataset(
             data_args.dataset_name,
@@ -331,7 +335,9 @@ def main():
     raw_datasets = raw_datasets.cast_column(
         data_args.audio_column_name,
         datasets.features.Audio(sampling_rate=feature_extractor.sampling_rate),
-    )
+    ) 
+
+
 
     def train_transforms(batch):
         """Apply train_transforms across a batch."""
@@ -373,16 +379,15 @@ def main():
     # `predictions` and `label_ids` fields) and has to return a dictionary string to float.
     def compute_metrics(eval_pred):
         """Computes accuracy , precision and f1 score"""
-        predictions, labels = eval_pred
-        predictions = np.argmax(predictions, axis=1)
+        predictions = np.argmax(eval_pred.predictions, axis=1)
         return {
             "accuracy": accuracy_metric.compute(
-                predictions=predictions, references=labels
-            ),
+                predictions=predictions, references=eval_pred.label_ids
+            )["accuracy"],
             "precision": precision_metric.compute(
-                predictions=predictions, references=labels , average='weighted'
-            ),
-            "f1": f1_metric.compute(predictions=predictions, references=labels ,average='weighted'),
+                predictions=predictions, references=eval_pred.label_ids , average='weighted'
+            )["precision"],
+            "f1": f1_metric.compute(predictions=predictions, references=eval_pred.label_ids ,average='weighted')["f1"],
         }
 
     config = AutoConfig.from_pretrained(
