@@ -35,7 +35,7 @@ check_min_version("4.26.0.dev0")
 require_version("datasets>=1.14.0", "To fix: pip install -r requirements.txt")
 
 
-def random_subsample(wav: np.ndarray, max_length: float, sample_rate: int = 16000):
+def random_subsample(wav: np.ndarray, max_length: float, sample_rate: int = 44000):
     """Randomly sample chunks of `max_length` seconds from the input audio"""
     sample_length = int(round(sample_rate * max_length))
     if len(wav) <= sample_length:
@@ -338,7 +338,6 @@ def main():
     ) 
 
 
-
     def train_transforms(batch):
         """Apply train_transforms across a batch."""
         output_batch = {"input_values": []}
@@ -447,8 +446,7 @@ def main():
 
     # Init wandb logger
     if data_args.report_to_wandb:
-
-        wandb.init(project="waxal_keyword_spotting", config=vars(training_args))
+        wandb.init(project="waxal_keyword_spotting", name="waxal_finetuning" ,config=vars(training_args))
         wandb.config.update(vars(model_args))
         wandb.config.update(vars(data_args))
 
@@ -465,15 +463,12 @@ def main():
         trainer.save_metrics("train", train_result.metrics)
         trainer.save_state()
 
-        # Log training history to wandb
-        if data_args.report_to_wandb:
-            wandb.log(trainer.state.log_history)
-
     # Evaluation
     if training_args.do_eval:
         metrics = trainer.evaluate()
         trainer.log_metrics("eval", metrics)
         trainer.save_metrics("eval", metrics)
+
 
     # Write model card and (optionally) push to hub
     kwargs = {
