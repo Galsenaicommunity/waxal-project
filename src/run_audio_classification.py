@@ -35,7 +35,7 @@ check_min_version("4.26.0.dev0")
 require_version("datasets>=1.14.0", "To fix: pip install -r requirements.txt")
 
 
-def random_subsample(wav: np.ndarray, max_length: float, sample_rate: int = 44000):
+def random_subsample(wav: np.ndarray, max_length: float, sample_rate: int = 48000):
     """Randomly sample chunks of `max_length` seconds from the input audio"""
     sample_length = int(round(sample_rate * max_length))
     if len(wav) <= sample_length:
@@ -299,6 +299,7 @@ def main():
             split=f"train[:{data_args.validation_split_percentage}%]",
             cache_dir=model_args.cache_dir,
         )
+        
         raw_datasets["train"] = load_dataset(
             data_args.dataset_name,
             data_args.dataset_config_name,
@@ -327,6 +328,7 @@ def main():
         return_attention_mask=model_args.attention_mask,
         cache_dir=model_args.cache_dir,
         revision=model_args.model_revision,
+        sampling_rate=44100,
         use_auth_token=True if model_args.use_auth_token else None,
     )
 
@@ -446,7 +448,7 @@ def main():
 
     # Init wandb logger
     if data_args.report_to_wandb:
-        wandb.init(project="waxal_keyword_spotting", name="waxal_finetuning" ,config=vars(training_args))
+        wandb.init(project="waxal_keyword_spotting", name=f"waxal_finetuning_{str(model_args.model_name_or_path).split('/')[-1]}" , config=vars(training_args))
         wandb.config.update(vars(model_args))
         wandb.config.update(vars(data_args))
 

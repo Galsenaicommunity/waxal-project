@@ -11,7 +11,7 @@ State of the art study of Keyword Spotting models to leverage the [Waxal](https:
 The following command shows how to fine-tune [wav2vec2-base](https://huggingface.co/facebook/wav2vec2-base) on the 🗣️ [Keyword Spotting](https://huggingface.co/datasets/galsenai/waxal_dataset) of the waxal dataset.
 
 
-```bash
+```python
 python src/run_audio_classification.py \
     --model_name_or_path facebook/wav2vec2-base \
     --dataset_name galsenai/waxal_dataset \
